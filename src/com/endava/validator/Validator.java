@@ -53,7 +53,7 @@ public class Validator {
             numS = isString();
 
             for (int i = 0; i < numS.length(); i++) {
-                if (Character.isDigit(numS.charAt(i))){
+                if (!Character.isDigit(numS.charAt(i))){
                     System.out.println("Wrong number format, please try again");
                     done = true;
                     break;
@@ -67,7 +67,7 @@ public class Validator {
 
     public Date dateSet(){
         Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         boolean done = true;
         String dateS = "";
 
@@ -85,10 +85,10 @@ public class Validator {
                 && Character.isDigit(dateS.charAt(3)) && Character.isDigit(dateS.charAt(4))
                 && Character.isDigit(dateS.charAt(6)) && Character.isDigit(dateS.charAt(7))
                 && Character.isDigit(dateS.charAt(8)) && Character.isDigit(dateS.charAt(9))
-                && dateS.charAt(2) == '-' && dateS.charAt(2) == '-'){
+                && dateS.charAt(2) == '.' && dateS.charAt(2) == '.'){
+
                 try {
                     date = simpleDateFormat.parse(dateS);
-                    //System.out.println(simpleDateFormat.format(date));
                 } catch (ParseException e) {
                     System.out.println("Something go wrong, try again");
                     done = true;
@@ -97,6 +97,8 @@ public class Validator {
                 System.out.println("Wrong Date format, try again '25.06.2015 ' :");
                 done = true;
             }
+
+            System.out.println(done);
         }
         return date;
     }
@@ -127,14 +129,14 @@ public class Validator {
 
                 if (countrySupport.getUnsupported()[i].equals(country)){
                     System.out.println("This user is Unsupported Country try else :  ");
-                    country = "UnSupported";
-
+                    done = true;
+                    break;
                 }
             }
             for (int i = 0; i < countrySupport.getSupported().length; i++) {
 
-                if (!countrySupport.getSupported()[i].equals(country)){
-                    inexistedCountry = true;
+                if (countrySupport.getSupported()[i].equals(country)){
+                    inexistedCountry = false;
                 }
             }
 
@@ -153,6 +155,13 @@ public class Validator {
 
         while (done){
             done = false;
+
+            System.out.println("Please choice Status\n" +
+                    "1. New\n" +
+                    "2. Waiting Approval\n" +
+                    "3. InProgress\n" +
+                    "4. Complete\n");
+
             choice = isDigit();
             if (choice == 1) status = Status.New;
             else if (choice == 2) status = Status.WaitingApproval;
@@ -167,12 +176,13 @@ public class Validator {
         return status;
     }
 
-    public int deliveryPriceSet(int price, String country){
-        int deliveryPrice = price;
+    public double deliveryPriceSet(double price, String country){
+        double deliveryPrice = price;
 
         for (int i = 0; i < countryList.getCountryList().size(); i++) {
             if (countryList.getCountryList().get(i).getName().equals(country)){
-                deliveryPrice = price * (1 + countryList.getCountryList().get(i).getTaxFee()/100);
+                double koeff = 1 + (double)countryList.getCountryList().get(i).getTaxFee()/100;
+                deliveryPrice = price * koeff;
             }
         }
 

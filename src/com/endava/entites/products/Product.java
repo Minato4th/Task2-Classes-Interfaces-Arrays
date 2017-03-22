@@ -6,11 +6,11 @@ package com.endava.entites.products;
 public abstract class Product {
 
     String productType;
-    int price;
+    double price;
     String countryToDeliver;
     int count;
     int weight;
-    int deliveryPrice;
+    double deliveryPrice;
     Status status;
 
     @Override
@@ -47,12 +47,17 @@ public abstract class Product {
 
     @Override
     public int hashCode() {
-        int result = getProductType() != null ? getProductType().hashCode() : 0;
-        result = 31 * result + getPrice();
+
+        int result;
+        long temp;
+        result = getProductType() != null ? getProductType().hashCode() : 0;
+        temp = Double.doubleToLongBits(getPrice());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (getCountryToDeliver() != null ? getCountryToDeliver().hashCode() : 0);
         result = 31 * result + getCount();
         result = 31 * result + getWeight();
-        result = 31 * result + getDeliveryPrice();
+        temp = Double.doubleToLongBits(getDeliveryPrice());
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
         return result;
     }
@@ -65,11 +70,11 @@ public abstract class Product {
         this.productType = productType;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -97,11 +102,11 @@ public abstract class Product {
         this.weight = weight;
     }
 
-    public int getDeliveryPrice() {
+    public double getDeliveryPrice() {
         return deliveryPrice;
     }
 
-    public void setDeliveryPrice(int deliveryPrice) {
+    public void setDeliveryPrice(double deliveryPrice) {
         this.deliveryPrice = deliveryPrice;
     }
 

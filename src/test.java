@@ -9,17 +9,9 @@ import java.util.Date;
  */
 public class test {
     public static void main(String[] args) {
-        Status status;
 
-
-        /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-        try {
-            Date date = simpleDateFormat.parse("25-Jun-2025");
-            System.out.println(date);
-            System.out.println(simpleDateFormat.format(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
+        String a ="sdfgdf0";
+        System.out.println(a.substring(0,2));
 
     }
 }
